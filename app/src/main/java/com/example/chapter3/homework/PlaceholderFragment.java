@@ -17,11 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceholderFragment extends Fragment {
-
+    public int type=0;
     public View ret,load;
     public RecyclerView mRecyclerView;
     private myAdapter myAdapter1;
     public static final String[] Cars={"Benz","Audio","BMW","Tesla","Lamborghini","chevrolet","Volkswagen","TOYOTA"};
+    public static final String[] City={"Beijing","Shanghai","Hangzhou","New York","London","Paris","Tokyo","Berlin","Sydney","Auckland"};
+    public static final String[] Movie={"Spider man","Mission Impossible","战狼","超时空同居"};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,17 +36,42 @@ public class PlaceholderFragment extends Fragment {
         myAdapter1 = new myAdapter();
         mRecyclerView.setAdapter(myAdapter1);
         List<Data> list = new ArrayList<>();
-        for(int i = 0; i < Cars.length; ++ i) {
-            Data data = new Data(Cars[i]);
-            list.add(data);
+        int size=0;
+        if (type==0){
+            size=Cars.length;
+        }
+        else if(type==1){
+            size=City.length;
+        }
+        else size=Movie.length;
+        for(int i = 0; i < size; ++ i) {
+            if (type==0){
+                Data data = new Data(Cars[i]);
+                list.add(data);
+            }
+            else if(type==1){
+                Data data = new Data(City[i]);
+                list.add(data);
+            }
+            else{
+                Data data = new Data(Movie[i]);
+                list.add(data);
+            }
+
         }
         myAdapter1.setData(list);
         myAdapter1.notifyDataSetChanged();
         myAdapter1.setOnItemClickListener (new myAdapter.OnItemClickListener (){
             @Override
             public void onItemClickListener(View view, int position) {
-
-                Toast.makeText(null, "no."+position + " clicked", Toast.LENGTH_SHORT).show();
+                if (type==0)
+                    Toast.makeText(getContext(), Cars[position], Toast.LENGTH_SHORT).show();
+                else  if(type==1){
+                    Toast.makeText(getContext(), City[position], Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getContext(), Movie[position], Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return ret;}

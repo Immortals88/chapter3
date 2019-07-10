@@ -26,7 +26,9 @@ public class Ch3Ex3Activity extends AppCompatActivity {
         pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
-                return new PlaceholderFragment();
+                PlaceholderFragment a=new PlaceholderFragment();
+                a.type=i;
+                return a;
             }
 
             @Override
